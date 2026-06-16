@@ -1,4 +1,29 @@
 services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile-production
+    container_name: app
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      HOST: "0.0.0.0"
+      PORT: "3001"
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+    command: sh -c "node ace migration:run --force && node bin/server.js"
+    depends_on:
+      - redis
+    volumes:
+      - app_sqlite:/app/tmp
+      - app_uploads:/app/storage/uploads
+    networks:
+      - app_network
+
   redis:
     image: redis:7-alpine
     container_name: redis
@@ -17,6 +42,10 @@ services:
       - app_network
 
 volumes:
+  app_sqlite:
+    driver: local
+  app_uploads:
+    driver: local
   redis_data:
     driver: local
 
