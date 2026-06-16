@@ -10,9 +10,9 @@ const shieldConfig = defineConfig({
         directives: {
             defaultSrc: ["'self'"],
             scriptSrc: ["'self'"],
-            styleSrc: ["'self'"],
+            styleSrc: ["'self'", 'https://fonts.googleapis.com'],
             imgSrc: ["'self'", 'data:', 'https:'],
-            fontSrc: ["'self'"],
+            fontSrc: ["'self'", 'https://fonts.gstatic.com'],
             connectSrc: ["'self'"],
             objectSrc: ["'none'"],
             mediaSrc: ["'self'"],

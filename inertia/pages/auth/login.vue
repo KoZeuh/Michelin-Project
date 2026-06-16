@@ -37,14 +37,7 @@
                         <h2 class="text-2xl tracking-tight">Authentication</h2>
                     </div>
                     <div
-                        class="w-11 h-11 rounded-2xl border border-white/10 flex items-center justify-center text-white"
-                        style="
-                            background: linear-gradient(
-                                135deg,
-                                var(--brand-primary),
-                                var(--brand-accent)
-                            );
-                        "
+                        class="w-11 h-11 rounded-2xl border border-white/10 flex items-center justify-center text-white brand-gradient"
                     >
                         <span>◌</span>
                     </div>

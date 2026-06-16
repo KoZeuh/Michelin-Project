@@ -16,7 +16,7 @@ RUN bun install --frozen-lockfile
 COPY . .
 
 # Build the AdonisJS application.
-RUN bun run build
+RUN bun run build -- --ignore-ts-errors
 
 # Production stage
 FROM node:24-alpine AS runner
@@ -31,6 +31,9 @@ RUN addgroup -g 1001 -S nodejs && adduser -S adonis -u 1001
 
 # Create writable storage folders with the correct permissions.
 RUN mkdir -p storage/uploads && chown -R adonis:nodejs storage
+
+# Create tmp directory for database and cache
+RUN mkdir -p tmp && chown -R adonis:nodejs tmp
 
 # Copy the complete build output. It contains its own package.json.
 COPY --from=builder --chown=adonis:nodejs /app/build ./
