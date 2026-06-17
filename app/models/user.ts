@@ -2,10 +2,12 @@ import { UserSchema } from '#database/schema'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
+import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import { column, hasMany } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
 export default class User extends compose(UserSchema, withAuthFinder(hash as any)) {
+    static accessTokens = DbAccessTokensProvider.forModel(User)
     @column()
     declare role: string
 
