@@ -9,7 +9,6 @@ router
 
     router.post('logout', [controllers.Session, 'destroy']).as('session.destroy')
   })
-  .use(middleware.auth())
 
 router
   .group(() => {
