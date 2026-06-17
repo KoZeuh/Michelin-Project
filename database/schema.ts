@@ -7,6 +7,140 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
+export class AuthAccessTokenSchema extends BaseModel {
+  static $columns = ['abilities', 'createdAt', 'expiresAt', 'hash', 'id', 'lastUsedAt', 'name', 'tokenableId', 'type', 'updatedAt'] as const
+  $columns = AuthAccessTokenSchema.$columns
+  @column()
+  declare abilities: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column.dateTime()
+  declare expiresAt: DateTime | null
+  @column()
+  declare hash: string
+  @column({ isPrimary: true })
+  declare id: number
+  @column.dateTime()
+  declare lastUsedAt: DateTime | null
+  @column()
+  declare name: string | null
+  @column()
+  declare tokenableId: number
+  @column()
+  declare type: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class DropEligibilitySchema extends BaseModel {
+  static $columns = ['createdAt', 'dropId', 'id', 'updatedAt', 'userId'] as const
+  $columns = DropEligibilitySchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare dropId: number
+  @column({ isPrimary: true })
+  declare id: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare userId: number
+}
+
+export class DropSchema extends BaseModel {
+  static $columns = ['createdAt', 'expiresAt', 'id', 'slug', 'title', 'updatedAt'] as const
+  $columns = DropSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column.dateTime()
+  declare expiresAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare slug: string
+  @column()
+  declare title: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class PackTechnologySchema extends BaseModel {
+  static $columns = ['createdAt', 'icon', 'id', 'label', 'packId', 'sortOrder', 'updatedAt', 'value'] as const
+  $columns = PackTechnologySchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare icon: string
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare label: string
+  @column()
+  declare packId: number
+  @column()
+  declare sortOrder: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare value: string
+}
+
+export class PackSchema extends BaseModel {
+  static $columns = ['category', 'createdAt', 'description', 'discountPercentage', 'dropId', 'id', 'imageUrl', 'name', 'originalPrice', 'price', 'slug', 'stockRemainingPercentage', 'stockTotalInitial', 'subtitle', 'updatedAt'] as const
+  $columns = PackSchema.$columns
+  @column()
+  declare category: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare description: string | null
+  @column()
+  declare discountPercentage: number
+  @column()
+  declare dropId: number
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare imageUrl: string | null
+  @column()
+  declare name: string
+  @column()
+  declare originalPrice: number
+  @column()
+  declare price: number
+  @column()
+  declare slug: string
+  @column()
+  declare stockRemainingPercentage: number
+  @column()
+  declare stockTotalInitial: number
+  @column()
+  declare subtitle: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class ReviewSchema extends BaseModel {
+  static $columns = ['author', 'createdAt', 'id', 'initial', 'packId', 'rating', 'text', 'updatedAt'] as const
+  $columns = ReviewSchema.$columns
+  @column()
+  declare author: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare initial: string
+  @column()
+  declare packId: number
+  @column()
+  declare rating: number
+  @column()
+  declare text: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
 export class UserSchema extends BaseModel {
   static $columns = ['createdAt', 'email', 'firstName', 'id', 'lastName', 'password', 'role', 'rolesSyncedAt', 'status', 'updatedAt'] as const
   $columns = UserSchema.$columns

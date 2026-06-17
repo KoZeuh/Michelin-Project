@@ -29,12 +29,7 @@ const shieldConfig = defineConfig({
      */
     csrf: {
         enabled: true,
-        exceptRoutes: [
-            '/webhook/stripe',
-            '/sanctum/csrf-cookie',
-            '/api/public/requests',
-            '/api/public/requests/confirm',
-        ],
+        exceptRoutes: (ctx) => ctx.request.url().startsWith('/api/'),
         enableXsrfCookie: true,
         methods: ['POST', 'PUT', 'PATCH', 'DELETE'],
     },
