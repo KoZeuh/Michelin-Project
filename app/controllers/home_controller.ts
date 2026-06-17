@@ -1,9 +1,15 @@
 import type { HttpContext } from '@adonisjs/core/http'
 
-const HOME_PAGE = 'home' as never
 
 export default class HomeController {
-    public async index({ inertia }: HttpContext) {
-        return inertia.render(HOME_PAGE, {})
-    }
+
+  public async drop({ inertia }: HttpContext) {
+    return inertia.render('Drop/Index', {
+      initialStock: 37,
+    })
+  }
+
+  public async pourquoi({ inertia }: HttpContext) {
+    return inertia.render('Pourquoi/Index', {})
+  }
 }
