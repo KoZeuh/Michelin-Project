@@ -1,0 +1,31 @@
+name: Deploy App
+
+on:
+  push:
+    branches:
+      - main  # Ou le nom de ta branche par défaut
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci  # Recommandé : crée un tag "ci" dans Tailscale pour gérer les accès
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: nikoolaii  # Remplace par ton user (ex: ubuntu, root...)
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/nikoolaii/project/Michelin-Project
+            git pull origin main
+            docker compose up -d --build # Ou la commande spécifique à ton container
