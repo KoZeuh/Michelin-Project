@@ -25,6 +25,22 @@ jobs:
       - name: Lint
         run: bun run lint
 
+      - name: Generate AdonisJS types
+        run: node ace generate:types
+        env:
+          NODE_ENV: test
+          PUBLIC_APP_NAME: CI
+          APP_KEY: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          PORT: 3333
+          HOST: localhost
+          LOG_LEVEL: debug
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          REDIS_PASSWORD: ci_password
+          SESSION_DRIVER: memory
+          LIMITER_STORE: memory
+          APP_URL: http://localhost:3333
+
       - name: Typecheck
         run: bun run typecheck
 

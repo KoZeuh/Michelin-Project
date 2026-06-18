@@ -1,5 +1,5 @@
 import { DropSchema } from '#database/schema'
-import { column, hasMany } from '@adonisjs/lucid/orm'
+import { hasMany } from '@adonisjs/lucid/orm'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Pack from '#models/pack'
 import DropEligibility from '#models/drop_eligibility'
