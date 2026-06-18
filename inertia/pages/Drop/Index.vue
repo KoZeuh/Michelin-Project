@@ -57,16 +57,6 @@
         <div class="scrollhint"><span class="m"></span>Scrolle</div>
       </section>
 
-      <!-- MARQUEE BANNER -->
-      <div class="marquee">
-        <div class="mq-track">
-          <span>Drop #2 Gravel<i></i>Édition Finisher<i></i>Accès 48h<i></i>Power Gravel<i></i>Stock
-            limité<i></i>Unlock &amp; Ride<i></i></span>
-          <span>Drop #2 Gravel<i></i>Édition Finisher<i></i>Accès 48h<i></i>Power Gravel<i></i>Stock
-            limité<i></i>Unlock &amp; Ride<i></i></span>
-        </div>
-      </div>
-
       <!-- STORY SECTION -->
       <section class="story" data-reveal>
         <div class="wrap">
