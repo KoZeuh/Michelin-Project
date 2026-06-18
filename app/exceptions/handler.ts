@@ -31,6 +31,19 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * response to the client
    */
   async handle(error: unknown, ctx: HttpContext) {
+    if (ctx.request.url().startsWith('/api')) {
+      const err = error as any
+      const status = err.status ?? 500
+
+      if (err.code === 'E_VALIDATION_ERROR') {
+        return ctx.response.status(422).json({ errors: err.messages })
+      }
+
+      return ctx.response.status(status).json({
+        message: err.message ?? 'An error occurred',
+      })
+    }
+
     return super.handle(error, ctx)
   }
 
