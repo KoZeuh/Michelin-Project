@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
-import { useBrand } from '~/composables/useBrand'
+import { useBrand } from '~/composables/use_brand'
 import { getSeoData } from '~/data/nav'
 
 const appName = useBrand().value.name

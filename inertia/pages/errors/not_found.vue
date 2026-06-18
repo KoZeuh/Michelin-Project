@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BrandMark from '~/components/BrandMark.vue'
-import { useBrand } from '~/composables/useBrand'
+import { useBrand } from '~/composables/use_brand'
 
 const appName = useBrand().value.name
 </script>

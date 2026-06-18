@@ -432,7 +432,7 @@ import { ref, computed, watch, onMounted, onUnmounted, nextTick, defineComponent
 import Lenis from 'lenis'
 import SiteHeader from '~/components/Shared/SiteHeader.vue'
 import SiteFooter from '~/components/Shared/SiteFooter.vue'
-import { MichelinThreeScene } from '~/utils/threeTireGenerator'
+import { MichelinThreeScene } from '~/utils/three_tire_generator'
 
 defineOptions({
   layout: defineComponent({

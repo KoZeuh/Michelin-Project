@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/vue3'
 import { Form, Link } from '@adonisjs/inertia/vue'
 import TothLayout from '~/layouts/auth.vue'
 import BrandMark from '~/components/BrandMark.vue'
-import { useBrand } from '~/composables/useBrand'
+import { useBrand } from '~/composables/use_brand'
 
 defineOptions({
   layout: TothLayout,

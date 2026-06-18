@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useBrand } from '~/composables/useBrand'
+import { useBrand } from '~/composables/use_brand'
 import { brandGradient, getBrandInitials } from '~/utils/brand'
 
 const props = withDefaults(
