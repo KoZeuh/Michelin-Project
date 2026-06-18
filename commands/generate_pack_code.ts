@@ -8,7 +8,7 @@ const CODE_LENGTH = 6
 
 export default class GeneratePackCode extends BaseCommand {
   static commandName = 'pack:generate-code'
-  static description = "Génère un code promo pour un utilisateur à partir de son adresse email"
+  static description = 'Génère un code promo pour un utilisateur à partir de son adresse email'
 
   static options: CommandOptions = {
     startApp: true,
@@ -20,7 +20,7 @@ export default class GeneratePackCode extends BaseCommand {
   @flags.string({ description: 'Slug du pack (ex: pack-gravel-premium)', alias: 'p' })
   declare pack: string
 
-  @flags.number({ description: "Durée de validité en jours (défaut: 2)", alias: 'd', default: 2 })
+  @flags.number({ description: 'Durée de validité en jours (défaut: 2)', alias: 'd', default: 2 })
   declare days: number
 
   async run() {
