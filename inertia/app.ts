@@ -8,20 +8,20 @@ import { createApp, type DefineComponent, h } from 'vue'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 
 createInertiaApp({
-    title: (title) => title,
-    resolve: (name) => {
-        return resolvePageComponent(
-            `./pages/${name}.vue`,
-            import.meta.glob<DefineComponent>('./pages/**/*.vue'),
-            Layout
-        )
-    },
-    setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(TuyauProvider, { client }, { default: () => h(App, props) }) })
-            .use(plugin)
-            .mount(el)
-    },
-    progress: {
-        color: '#4B5563',
-    },
+  title: (title) => title,
+  resolve: (name) => {
+    return resolvePageComponent(
+      `./pages/${name}.vue`,
+      import.meta.glob<DefineComponent>('./pages/**/*.vue'),
+      Layout
+    )
+  },
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(TuyauProvider, { client }, { default: () => h(App, props) }) })
+      .use(plugin)
+      .mount(el)
+  },
+  progress: {
+    color: '#4B5563',
+  },
 })

@@ -17,27 +17,27 @@ import { sessionBrowserClient } from '@adonisjs/session/plugins/browser_client'
  * Learn more - https://japa.dev/docs/runner-config#plugins-optional
  */
 export const plugins: Config['plugins'] = [
-    assert(),
-    pluginAdonisJS(app),
-    dbAssertions(app),
+  assert(),
+  pluginAdonisJS(app),
+  dbAssertions(app),
 
-    /**
-     * Configures Playwright and creates a fresh browser
-     * context before every test.
-     */
-    browserClient({ runInSuites: ['browser'] }),
+  /**
+   * Configures Playwright and creates a fresh browser
+   * context before every test.
+   */
+  browserClient({ runInSuites: ['browser'] }),
 
-    /**
-     * Allows reading and writing session data
-     * via the browser context.
-     */
-    sessionBrowserClient(app),
+  /**
+   * Allows reading and writing session data
+   * via the browser context.
+   */
+  sessionBrowserClient(app),
 
-    /**
-     * Enables the loginAs method for authenticating
-     * users during tests.
-     */
-    authBrowserClient(app),
+  /**
+   * Enables the loginAs method for authenticating
+   * users during tests.
+   */
+  authBrowserClient(app),
 ]
 
 /**
@@ -48,8 +48,8 @@ export const plugins: Config['plugins'] = [
  * The teardown functions are executed after all the tests
  */
 export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {
-    setup: [],
-    teardown: [],
+  setup: [],
+  teardown: [],
 }
 
 /**
@@ -57,7 +57,7 @@ export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {
  * Learn more - https://japa.dev/docs/test-suites#lifecycle-hooks
  */
 export const configureSuite: Config['configureSuite'] = (suite) => {
-    if (['browser', 'functional', 'e2e'].includes(suite.name)) {
-        return suite.setup(() => testUtils.httpServer().start())
-    }
+  if (['browser', 'functional', 'e2e'].includes(suite.name)) {
+    return suite.setup(() => testUtils.httpServer().start())
+  }
 }

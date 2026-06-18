@@ -5,9 +5,9 @@ import Drop from '#models/drop'
 import User from '#models/user'
 
 export default class DropEligibility extends DropEligibilitySchema {
-    @belongsTo(() => Drop)
-    declare drop: BelongsTo<typeof Drop>
+  @belongsTo(() => Drop)
+  declare drop: BelongsTo<typeof Drop>
 
-    @belongsTo(() => User)
-    declare user: BelongsTo<typeof User>
+  @belongsTo(() => User)
+  declare user: BelongsTo<typeof User>
 }

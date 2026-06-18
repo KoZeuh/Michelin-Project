@@ -4,7 +4,7 @@ import { defineConfig } from '@adonisjs/core/app'
 import { generateRegistry } from '@tuyau/core/hooks'
 
 export default defineConfig({
-    /*
+  /*
   |--------------------------------------------------------------------------
   | Experimental flags
   |--------------------------------------------------------------------------
@@ -14,9 +14,9 @@ export default defineConfig({
   | during upgrade.
   |
   */
-    experimental: {},
+  experimental: {},
 
-    /*
+  /*
   |--------------------------------------------------------------------------
   | Commands
   |--------------------------------------------------------------------------
@@ -25,15 +25,15 @@ export default defineConfig({
   | will be scanned automatically from the "./commands" directory.
   |
   */
-    commands: [
-        () => import('@adonisjs/core/commands'),
-        () => import('@adonisjs/lucid/commands'),
-        () => import('@adonisjs/session/commands'),
-        () => import('@adonisjs/inertia/commands'),
-        () => import('@adonisjs/cache/commands'),
-    ],
+  commands: [
+    () => import('@adonisjs/core/commands'),
+    () => import('@adonisjs/lucid/commands'),
+    () => import('@adonisjs/session/commands'),
+    () => import('@adonisjs/inertia/commands'),
+    () => import('@adonisjs/cache/commands'),
+  ],
 
-    /*
+  /*
   |--------------------------------------------------------------------------
   | Service providers
   |--------------------------------------------------------------------------
@@ -42,33 +42,33 @@ export default defineConfig({
   | application
   |
   */
-    providers: [
-        () => import('@adonisjs/core/providers/app_provider'),
-        () => import('@adonisjs/core/providers/hash_provider'),
-        {
-            file: () => import('@adonisjs/core/providers/repl_provider'),
-            environment: ['repl', 'test'],
-        },
-        () => import('@adonisjs/core/providers/vinejs_provider'),
-        () => import('@adonisjs/core/providers/edge_provider'),
-        () => import('@adonisjs/session/session_provider'),
-        () => import('@adonisjs/vite/vite_provider'),
-        () => import('@adonisjs/shield/shield_provider'),
-        () => import('@adonisjs/static/static_provider'),
-        () => import('@adonisjs/lucid/database_provider'),
-        () => import('@adonisjs/cors/cors_provider'),
-        () => import('@adonisjs/inertia/inertia_provider'),
-        () => import('@adonisjs/auth/auth_provider'),
-        () => import('#providers/api_provider'),
-        () => import('#providers/database_provider'),
-        () => import('@adonisjs/cache/cache_provider'),
-        () => import('@adonisjs/limiter/limiter_provider'),
-        () => import('@adonisjs/drive/drive_provider'),
-        () => import('@adonisjs/transmit/transmit_provider'),
-        () => import('@adonisjs/mail/mail_provider'),
-    ],
+  providers: [
+    () => import('@adonisjs/core/providers/app_provider'),
+    () => import('@adonisjs/core/providers/hash_provider'),
+    {
+      file: () => import('@adonisjs/core/providers/repl_provider'),
+      environment: ['repl', 'test'],
+    },
+    () => import('@adonisjs/core/providers/vinejs_provider'),
+    () => import('@adonisjs/core/providers/edge_provider'),
+    () => import('@adonisjs/session/session_provider'),
+    () => import('@adonisjs/vite/vite_provider'),
+    () => import('@adonisjs/shield/shield_provider'),
+    () => import('@adonisjs/static/static_provider'),
+    () => import('@adonisjs/lucid/database_provider'),
+    () => import('@adonisjs/cors/cors_provider'),
+    () => import('@adonisjs/inertia/inertia_provider'),
+    () => import('@adonisjs/auth/auth_provider'),
+    () => import('#providers/api_provider'),
+    () => import('#providers/database_provider'),
+    () => import('@adonisjs/cache/cache_provider'),
+    () => import('@adonisjs/limiter/limiter_provider'),
+    () => import('@adonisjs/drive/drive_provider'),
+    () => import('@adonisjs/transmit/transmit_provider'),
+    () => import('@adonisjs/mail/mail_provider'),
+  ],
 
-    /*
+  /*
   |--------------------------------------------------------------------------
   | Preloads
   |--------------------------------------------------------------------------
@@ -76,13 +76,13 @@ export default defineConfig({
   | List of modules to import before starting the application.
   |
   */
-    preloads: [
-        () => import('#start/routes'),
-        () => import('#start/kernel'),
-        () => import('#start/validator'),
-    ],
+  preloads: [
+    () => import('#start/routes'),
+    () => import('#start/kernel'),
+    () => import('#start/validator'),
+  ],
 
-    /*
+  /*
   |--------------------------------------------------------------------------
   | Tests
   |--------------------------------------------------------------------------
@@ -91,28 +91,28 @@ export default defineConfig({
   | and add additional suites.
   |
   */
-    tests: {
-        suites: [
-            {
-                files: ['tests/unit/**/*.spec.{ts,js}'],
-                name: 'unit',
-                timeout: 2000,
-            },
-            {
-                files: ['tests/functional/**/*.spec.{ts,js}'],
-                name: 'functional',
-                timeout: 30000,
-            },
-            {
-                files: ['tests/browser/**/*.spec.{ts,js}'],
-                name: 'browser',
-                timeout: 300000,
-            },
-        ],
-        forceExit: false,
-    },
+  tests: {
+    suites: [
+      {
+        files: ['tests/unit/**/*.spec.{ts,js}'],
+        name: 'unit',
+        timeout: 2000,
+      },
+      {
+        files: ['tests/functional/**/*.spec.{ts,js}'],
+        name: 'functional',
+        timeout: 30000,
+      },
+      {
+        files: ['tests/browser/**/*.spec.{ts,js}'],
+        name: 'browser',
+        timeout: 300000,
+      },
+    ],
+    forceExit: false,
+  },
 
-    /*
+  /*
   |--------------------------------------------------------------------------
   | Metafiles
   |--------------------------------------------------------------------------
@@ -121,25 +121,25 @@ export default defineConfig({
   | the production build.
   |
   */
-    metaFiles: [
-        {
-            pattern: 'resources/views/**/*.edge',
-            reloadServer: false,
-        },
-        {
-            pattern: 'public/**',
-            reloadServer: false,
-        },
-    ],
-
-    hooks: {
-        init: [
-            indexEntities({
-                transformers: { enabled: true, withSharedProps: true },
-            }),
-            indexPages({ framework: 'vue3' }),
-            generateRegistry(),
-        ],
-        buildStarting: [() => import('@adonisjs/vite/build_hook')],
+  metaFiles: [
+    {
+      pattern: 'resources/views/**/*.edge',
+      reloadServer: false,
     },
+    {
+      pattern: 'public/**',
+      reloadServer: false,
+    },
+  ],
+
+  hooks: {
+    init: [
+      indexEntities({
+        transformers: { enabled: true, withSharedProps: true },
+      }),
+      indexPages({ framework: 'vue3' }),
+      generateRegistry(),
+    ],
+    buildStarting: [() => import('@adonisjs/vite/build_hook')],
+  },
 })

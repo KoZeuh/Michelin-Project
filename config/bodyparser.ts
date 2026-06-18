@@ -1,78 +1,78 @@
 import { defineConfig } from '@adonisjs/core/bodyparser'
 
 const bodyParserConfig = defineConfig({
-    /**
-     * Parse request bodies for these HTTP methods.
-     * Keep this aligned with methods that receive payloads in your routes.
-     */
-    allowedMethods: ['POST', 'PUT', 'PATCH', 'DELETE'],
+  /**
+   * Parse request bodies for these HTTP methods.
+   * Keep this aligned with methods that receive payloads in your routes.
+   */
+  allowedMethods: ['POST', 'PUT', 'PATCH', 'DELETE'],
 
+  /**
+   * Config for the "application/x-www-form-urlencoded"
+   * content-type parser.
+   */
+  form: {
     /**
-     * Config for the "application/x-www-form-urlencoded"
-     * content-type parser.
+     * Normalize empty string values to null.
      */
-    form: {
-        /**
-         * Normalize empty string values to null.
-         */
-        convertEmptyStringsToNull: true,
-
-        /**
-         * Content types handled by the form parser.
-         */
-        types: ['application/x-www-form-urlencoded'],
-    },
+    convertEmptyStringsToNull: true,
 
     /**
-     * Config for the JSON parser.
+     * Content types handled by the form parser.
      */
-    json: {
-        /**
-         * Normalize empty string values to null.
-         */
-        convertEmptyStringsToNull: true,
+    types: ['application/x-www-form-urlencoded'],
+  },
 
-        /**
-         * Content types handled by the JSON parser.
-         */
-        types: [
-            'application/json',
-            'application/json-patch+json',
-            'application/vnd.api+json',
-            'application/csp-report',
-        ],
-    },
+  /**
+   * Config for the JSON parser.
+   */
+  json: {
+    /**
+     * Normalize empty string values to null.
+     */
+    convertEmptyStringsToNull: true,
 
     /**
-     * Config for the "multipart/form-data" content-type parser.
-     * File uploads are handled by the multipart parser.
+     * Content types handled by the JSON parser.
      */
-    multipart: {
-        /**
-         * Automatically process uploaded files into the system tmp directory.
-         */
-        autoProcess: true,
+    types: [
+      'application/json',
+      'application/json-patch+json',
+      'application/vnd.api+json',
+      'application/csp-report',
+    ],
+  },
 
-        /**
-         * Normalize empty string values to null.
-         */
-        convertEmptyStringsToNull: true,
+  /**
+   * Config for the "multipart/form-data" content-type parser.
+   * File uploads are handled by the multipart parser.
+   */
+  multipart: {
+    /**
+     * Automatically process uploaded files into the system tmp directory.
+     */
+    autoProcess: true,
 
-        /**
-         * Routes where multipart processing is handled manually.
-         */
-        processManually: [],
+    /**
+     * Normalize empty string values to null.
+     */
+    convertEmptyStringsToNull: true,
 
-        /**
-         * Maximum accepted payload size for multipart requests.
-         */
-        limit: '20mb',
+    /**
+     * Routes where multipart processing is handled manually.
+     */
+    processManually: [],
 
-        /**
-         * Content types handled by the multipart parser.
-         */
-        types: ['multipart/form-data'],
-    },
+    /**
+     * Maximum accepted payload size for multipart requests.
+     */
+    limit: '20mb',
+
+    /**
+     * Content types handled by the multipart parser.
+     */
+    types: ['multipart/form-data'],
+  },
 })
 
 export default bodyParserConfig

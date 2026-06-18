@@ -5,7 +5,6 @@ const DROP_PAGE = 'Drop/Index' as never
 const POURQUOI_PAGE = 'Pourquoi/Index' as never
 
 export default class HomeController {
-
   public async drop({ inertia }: HttpContext) {
     return inertia.render(DROP_PAGE, {
       initialStock: INITIAL_STOCK,

@@ -13,11 +13,13 @@ Toutes les réponses sont en **JSON**. Les routes protégées requièrent un hea
 Connecte un utilisateur et retourne un token d'accès.
 
 **Headers**
+
 ```
 Content-Type: application/json
 ```
 
 **Body**
+
 ```json
 {
   "email": "user@example.com",
@@ -26,6 +28,7 @@ Content-Type: application/json
 ```
 
 **Réponse 200**
+
 ```json
 {
   "token": "oat_MQ.eXg3WF...",
@@ -40,15 +43,15 @@ Content-Type: application/json
 ```
 
 **Réponse 400** — Validation échouée (email invalide, mot de passe trop court)
+
 ```json
 {
-  "errors": [
-    { "message": "The email field must be a valid email address", "field": "email" }
-  ]
+  "errors": [{ "message": "The email field must be a valid email address", "field": "email" }]
 }
 ```
 
 **Réponse 400** — Identifiants incorrects
+
 ```json
 {
   "message": "Invalid credentials"
@@ -64,11 +67,13 @@ Content-Type: application/json
 Invalide le token courant.
 
 **Headers**
+
 ```
 Authorization: Bearer <token>
 ```
 
 **Réponse 200**
+
 ```json
 {
   "message": "Logged out"
@@ -84,23 +89,25 @@ Authorization: Bearer <token>
 Retourne les informations générales d'un drop et indique si l'utilisateur connecté y est éligible.
 
 **Headers**
+
 ```
 Authorization: Bearer <token>
 ```
 
 **Paramètres URL**
-| Paramètre | Type   | Description              |
+| Paramètre | Type | Description |
 |-----------|--------|--------------------------|
-| `dropId`  | string | Slug unique du drop      |
+| `dropId` | string | Slug unique du drop |
 
 **Drops disponibles (mockup)**
-| dropId            | Titre           |
+| dropId | Titre |
 |-------------------|-----------------|
-| `drop-gravel-02`  | Gravel Edition  |
-| `drop-route-01`   | Route Classic   |
-| `drop-urbain-03`  | Urbain Commuter |
+| `drop-gravel-02` | Gravel Edition |
+| `drop-route-01` | Route Classic |
+| `drop-urbain-03` | Urbain Commuter |
 
 **Réponse 200**
+
 ```json
 {
   "dropId": "drop-gravel-02",
@@ -110,14 +117,15 @@ Authorization: Bearer <token>
 }
 ```
 
-| Champ       | Type    | Description                                                   |
-|-------------|---------|---------------------------------------------------------------|
-| `dropId`    | string  | Identifiant du drop                                           |
-| `title`     | string  | Nom affiché du drop                                           |
-| `expiresAt` | string  | Date/heure d'expiration en ISO 8601 UTC — utilise ce champ pour le compte à rebours |
-| `isEligible`| boolean | `true` si l'utilisateur connecté peut accéder à ce drop       |
+| Champ        | Type    | Description                                                                         |
+| ------------ | ------- | ----------------------------------------------------------------------------------- |
+| `dropId`     | string  | Identifiant du drop                                                                 |
+| `title`      | string  | Nom affiché du drop                                                                 |
+| `expiresAt`  | string  | Date/heure d'expiration en ISO 8601 UTC — utilise ce champ pour le compte à rebours |
+| `isEligible` | boolean | `true` si l'utilisateur connecté peut accéder à ce drop                             |
 
 **Réponse 404**
+
 ```json
 { "message": "Drop not found" }
 ```
@@ -131,26 +139,29 @@ Authorization: Bearer <token>
 Retourne la liste des packs disponibles pour un drop, avec leurs technologies et l'état du stock.
 
 **Headers**
+
 ```
 Authorization: Bearer <token>
 ```
 
 **Paramètres URL**
-| Paramètre | Type   | Description         |
+| Paramètre | Type | Description |
 |-----------|--------|---------------------|
-| `dropId`  | string | Slug unique du drop |
+| `dropId` | string | Slug unique du drop |
 
 **Query params (optionnel)**
-| Paramètre  | Type   | Valeurs possibles              | Description               |
+| Paramètre | Type | Valeurs possibles | Description |
 |------------|--------|--------------------------------|---------------------------|
-| `category` | string | `GRAVEL`, `ROUTE`, `URBAIN`    | Filtre par catégorie      |
+| `category` | string | `GRAVEL`, `ROUTE`, `URBAIN` | Filtre par catégorie |
 
 **Exemple**
+
 ```
 GET /api/drops/drop-gravel-02/packs?category=GRAVEL
 ```
 
 **Réponse 200**
+
 ```json
 [
   {
@@ -167,9 +178,9 @@ GET /api/drops/drop-gravel-02/packs?category=GRAVEL
       "remainingPercentage": 33
     },
     "technologies": [
-      { "icon": "bolt",       "label": "Résistance au roulement", "value": "Ultra-Low (3 sur 5)" },
-      { "icon": "shield",     "label": "Protection",              "value": "ProTek+ 5 mm"         },
-      { "icon": "straighten", "label": "Dimension",               "value": "700x40c / 650b-47"    }
+      { "icon": "bolt", "label": "Résistance au roulement", "value": "Ultra-Low (3 sur 5)" },
+      { "icon": "shield", "label": "Protection", "value": "ProTek+ 5 mm" },
+      { "icon": "straighten", "label": "Dimension", "value": "700x40c / 650b-47" }
     ],
     "description": "Conçu pour les terrains mixtes..."
   }
@@ -177,17 +188,18 @@ GET /api/drops/drop-gravel-02/packs?category=GRAVEL
 ```
 
 **Description des champs**
-| Champ                        | Type    | Description                                                       |
+| Champ | Type | Description |
 |------------------------------|---------|-------------------------------------------------------------------|
-| `id`                         | string  | Identifiant du pack — utilise-le pour récupérer les avis          |
-| `price`                      | number  | Prix après remise (€)                                             |
-| `originalPrice`              | number  | Prix barré (€)                                                    |
-| `discountPercentage`         | number  | Pourcentage de réduction                                          |
-| `stock.totalInitial`         | number  | Stock de départ                                                   |
-| `stock.remainingPercentage`  | number  | Pourcentage restant — utilise-le pour la barre de progression     |
-| `technologies[].icon`        | string  | Nom d'icône Material (`bolt`, `shield`, `straighten`)             |
+| `id` | string | Identifiant du pack — utilise-le pour récupérer les avis |
+| `price` | number | Prix après remise (€) |
+| `originalPrice` | number | Prix barré (€) |
+| `discountPercentage` | number | Pourcentage de réduction |
+| `stock.totalInitial` | number | Stock de départ |
+| `stock.remainingPercentage` | number | Pourcentage restant — utilise-le pour la barre de progression |
+| `technologies[].icon` | string | Nom d'icône Material (`bolt`, `shield`, `straighten`) |
 
 **Réponse 404**
+
 ```json
 { "message": "Drop not found" }
 ```
@@ -201,21 +213,24 @@ GET /api/drops/drop-gravel-02/packs?category=GRAVEL
 Retourne la note globale et les derniers avis clients pour un pack.
 
 **Headers**
+
 ```
 Authorization: Bearer <token>
 ```
 
 **Paramètres URL**
-| Paramètre   | Type   | Description                                         |
+| Paramètre | Type | Description |
 |-------------|--------|-----------------------------------------------------|
-| `productId` | string | Correspond au champ `id` retourné par `/packs`      |
+| `productId` | string | Correspond au champ `id` retourné par `/packs` |
 
 **Exemple**
+
 ```
 GET /api/products/pack-gravel-premium/reviews
 ```
 
 **Réponse 200**
+
 ```json
 {
   "averageRating": 4.8,
@@ -235,14 +250,15 @@ GET /api/products/pack-gravel-premium/reviews
 }
 ```
 
-| Champ           | Type   | Description                                             |
-|-----------------|--------|---------------------------------------------------------|
-| `averageRating` | number | Note moyenne sur 5 (arrondie à 1 décimale)              |
-| `totalReviews`  | number | Nombre total d'avis                                     |
-| `reviews`       | array  | Les 10 derniers avis                                    |
-| `initial`       | string | Initiale de l'auteur pour l'avatar                      |
+| Champ           | Type   | Description                                |
+| --------------- | ------ | ------------------------------------------ |
+| `averageRating` | number | Note moyenne sur 5 (arrondie à 1 décimale) |
+| `totalReviews`  | number | Nombre total d'avis                        |
+| `reviews`       | array  | Les 10 derniers avis                       |
+| `initial`       | string | Initiale de l'auteur pour l'avatar         |
 
 **Réponse 404**
+
 ```json
 { "message": "Product not found" }
 ```
@@ -251,13 +267,13 @@ GET /api/products/pack-gravel-premium/reviews
 
 ## Gestion des erreurs
 
-| Code HTTP | Signification                                                         |
-|-----------|-----------------------------------------------------------------------|
-| `200`     | Succès                                                                |
-| `400`     | Données invalides (validation) ou identifiants incorrects             |
-| `401`     | Token absent, expiré ou invalide — rediriger vers l'écran de login    |
-| `404`     | Ressource introuvable                                                 |
-| `500`     | Erreur serveur                                                        |
+| Code HTTP | Signification                                                      |
+| --------- | ------------------------------------------------------------------ |
+| `200`     | Succès                                                             |
+| `400`     | Données invalides (validation) ou identifiants incorrects          |
+| `401`     | Token absent, expiré ou invalide — rediriger vers l'écran de login |
+| `404`     | Ressource introuvable                                              |
+| `500`     | Erreur serveur                                                     |
 
 ---
 
@@ -292,10 +308,10 @@ GET /api/products/pack-gravel-premium/reviews
 
 **Comptes disponibles**
 
-| Email                  | Mot de passe  | Rôle        |
-|------------------------|---------------|-------------|
-| `admin@schoolhub.io`   | `demo-admin`  | superadmin  |
-| `user@schoolhub.io`    | `demo-user`   | developer   |
+| Email                | Mot de passe | Rôle       |
+| -------------------- | ------------ | ---------- |
+| `admin@schoolhub.io` | `demo-admin` | superadmin |
+| `user@schoolhub.io`  | `demo-user`  | developer  |
 
 **Éligibilités**
 
@@ -304,9 +320,9 @@ Le drop `drop-urbain-03` retournera `isEligible: false`.
 
 **IDs de packs pour les avis**
 
-| productId              | Drop associé       | Catégorie |
-|------------------------|--------------------|-----------|
-| `pack-gravel-premium`  | `drop-gravel-02`   | GRAVEL    |
-| `pack-gravel-essential`| `drop-gravel-02`   | GRAVEL    |
-| `pack-route-premium`   | `drop-route-01`    | ROUTE     |
-| `pack-urbain-premium`  | `drop-urbain-03`   | URBAIN    |
+| productId               | Drop associé     | Catégorie |
+| ----------------------- | ---------------- | --------- |
+| `pack-gravel-premium`   | `drop-gravel-02` | GRAVEL    |
+| `pack-gravel-essential` | `drop-gravel-02` | GRAVEL    |
+| `pack-route-premium`    | `drop-route-01`  | ROUTE     |
+| `pack-urbain-premium`   | `drop-urbain-03` | URBAIN    |

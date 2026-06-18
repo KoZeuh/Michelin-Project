@@ -2,13 +2,10 @@ import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
 
-router
-  .group(() => {
-    router.get('/', [controllers.Home, 'drop']).as('home')
-    router.get('/pourquoi-michelin', [controllers.Home, 'pourquoi']).as('michelin.pourquoi')
-
-    router.post('logout', [controllers.Session, 'destroy']).as('session.destroy')
-  })
+router.group(() => {
+  router.get('/', [controllers.Home, 'drop']).as('home')
+  router.get('/pourquoi-michelin', [controllers.Home, 'pourquoi']).as('michelin.pourquoi')
+})
 
 router
   .group(() => {
