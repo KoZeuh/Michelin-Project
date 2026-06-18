@@ -62,7 +62,7 @@ export default defineConfig({
     () => import('#providers/api_provider'),
     () => import('#providers/database_provider'),
     () => import('@adonisjs/cache/cache_provider'),
-    () => import('@adonisjs/limiter/limiter_provider')
+    () => import('@adonisjs/limiter/limiter_provider'),
   ],
 
   /*

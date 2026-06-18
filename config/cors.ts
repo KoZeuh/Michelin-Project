@@ -10,12 +10,11 @@ import env from '#start/env'
 const corsConfig = defineConfig({
   enabled: true,
   // If PUBLIC_FORM_ALLOWED_ORIGINS is set, use it (comma separated), otherwise fallback to allow all origins
-  origin: env.get('PUBLIC_FORM_ALLOWED_ORIGINS')
-    ? env
-        .get('PUBLIC_FORM_ALLOWED_ORIGINS')
-        .split(',')
-        .map((s) => s.trim())
-    : true,
+  origin:
+    env
+      .get('PUBLIC_FORM_ALLOWED_ORIGINS')
+      ?.split(',')
+      .map((s) => s.trim()) ?? true,
   methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   headers: true,
   exposeHeaders: [],

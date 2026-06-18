@@ -7,7 +7,7 @@ export type AppBrand = {
 
 const brand: AppBrand = {
   name: env.get('PUBLIC_APP_NAME'),
-  logoUrl: env.get('PUBLIC_APP_LOGO') || null
+  logoUrl: env.get('PUBLIC_APP_LOGO') || null,
 }
 
 export default brand

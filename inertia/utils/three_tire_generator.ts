@@ -76,6 +76,7 @@ export class MichelinThreeScene {
   }
 
   private buildWheel() {
+  private buildWheel() {
     const g = new THREE.Group()
 
     // 1. Jante (Rim)
@@ -95,16 +96,16 @@ export class MichelinThreeScene {
     const hubCore = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.4, 32), hubMat)
     hubCore.rotation.x = Math.PI / 2
     g.add(hubCore)
-    
+
     const flangeZ = 0.14
     const flangeRadius = 0.08
     const flangeGeo = new THREE.CylinderGeometry(flangeRadius, flangeRadius, 0.03, 32)
-    
+
     const leftFlange = new THREE.Mesh(flangeGeo, hubMat)
     leftFlange.rotation.x = Math.PI / 2
     leftFlange.position.z = flangeZ
     g.add(leftFlange)
-    
+
     const rightFlange = new THREE.Mesh(flangeGeo, hubMat)
     rightFlange.rotation.x = Math.PI / 2
     rightFlange.position.z = -flangeZ
@@ -119,14 +120,14 @@ export class MichelinThreeScene {
 
     // 3. Rayons (Spokes)
     const spMat = new THREE.MeshStandardMaterial({ color: 0xdddddd, roughness: 0.2, metalness: 1 })
-    const NS = 24 
-    
+    const NS = 24
+
     for (let s = 0; s < NS; s++) {
       const isLeft = s % 2 === 0
       const z = isLeft ? flangeZ : -flangeZ
-      
+
       const rimAngle = (s / NS) * Math.PI * 2
-      const hubOffset = isLeft ? 0.4 : -0.4 
+      const hubOffset = isLeft ? 0.4 : -0.4
       const hubAngle = rimAngle + hubOffset
 
       const p1 = new THREE.Vector3(Math.cos(hubAngle) * flangeRadius, Math.sin(hubAngle) * flangeRadius, z)
@@ -134,7 +135,7 @@ export class MichelinThreeScene {
       
       const dir = new THREE.Vector3().subVectors(p2, p1)
       const len = dir.length()
-      
+
       const spoke = new THREE.Mesh(new THREE.CylinderGeometry(0.005, 0.005, len, 8), spMat)
       spoke.position.copy(p1).add(p2).multiplyScalar(0.5)
       spoke.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize())
@@ -204,6 +205,7 @@ export class MichelinThreeScene {
   }
 
   
+
   private buildTread(spec: any) {
     const g = new THREE.Group()
     const w = spec.width
