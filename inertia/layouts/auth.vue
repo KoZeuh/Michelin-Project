@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import FlashToasts from '~/components/FlashToasts.vue'
 import PendingRequestIndicator from '~/components/PendingRequestIndicator.vue'
-import { useBrand } from '~/composables/useBrand'
+import { useBrand } from '~/composables/use_brand'
 import { brandSurface } from '~/utils/brand'
 
 const brand = useBrand()
@@ -15,10 +15,7 @@ const shellStyle = computed(() => ({
 </script>
 
 <template>
-  <div
-    class="min-h-screen bg-[#0a0a0f] text-white selection:bg-blue-500/30 overflow-x-hidden"
-    :style="shellStyle"
-  >
+  <div class="min-h-screen bg-[#0a0a0f] text-white selection:bg-blue-500/30 overflow-x-hidden" :style="shellStyle">
     <slot />
     <PendingRequestIndicator />
     <FlashToasts />

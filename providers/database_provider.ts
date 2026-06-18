@@ -1,4 +1,4 @@
-import { ApplicationService } from '@adonisjs/core/types'
+import { type ApplicationService } from '@adonisjs/core/types'
 
 export default class DatabaseProvider {
   constructor(protected app: ApplicationService) {}

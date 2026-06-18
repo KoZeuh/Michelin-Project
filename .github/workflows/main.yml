@@ -1,31 +1,72 @@
-name: Deploy App
+name: CI/CD
 
 on:
   push:
-    branches:
-      - main # Ou le nom de ta branche par défaut
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  deploy:
+  quality:
+    name: Quality checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Generate AdonisJS types
+        run: node ace generate:types
+        env:
+          NODE_ENV: test
+          PUBLIC_APP_NAME: CI
+          APP_KEY: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          PORT: 3333
+          HOST: localhost
+          LOG_LEVEL: debug
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          REDIS_PASSWORD: ci_password
+          SESSION_DRIVER: memory
+          LIMITER_STORE: memory
+          APP_URL: http://localhost:3333
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Build
+        run: bun run build
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: quality
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
       - name: Connect to Tailscale
         uses: tailscale/github-action@v4
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci # Recommandé : crée un tag "ci" dans Tailscale pour gérer les accès
+          tags: tag:ci
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
-          username: nikoolaii # Remplace par ton user (ex: ubuntu, root...)
+          username: nikoolaii
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/nikoolaii/project/Michelin-Project
             git pull origin main
-            docker compose up -d --build # Ou la commande spécifique à ton container
+            docker compose up -d --build
