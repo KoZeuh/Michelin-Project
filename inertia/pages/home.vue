@@ -8,18 +8,17 @@ const seo = getSeoData(appName, 'Dashboard')
 </script>
 
 <template>
+
   <Head :title="seo.title">
     <meta name="description" :content="seo.description" />
   </Head>
 
   <div class="min-h-screen px-5 pb-12 pt-5 md:px-8">
     <div class="mx-auto max-w-[1540px] space-y-6">
-      <header
-        class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 md:p-8"
-      >
+      <header class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 md:p-8">
         <div
-          class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.08),_transparent_40%)]"
-        ></div>
+          class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.08),_transparent_40%)]">
+        </div>
         <div class="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div class="max-w-3xl space-y-4">
             <p class="text-xs uppercase tracking-[0.24em] text-gray-500">Dashboard</p>
@@ -34,10 +33,8 @@ const seo = getSeoData(appName, 'Dashboard')
           </div>
 
           <div class="flex flex-wrap gap-3">
-            <a
-              href="#"
-              class="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-gray-200 hover:bg-white/[0.06]"
-            >
+            <a href="#"
+              class="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-gray-200 hover:bg-white/[0.06]">
               Button #1
             </a>
             <a href="#" class="rounded-xl bg-white px-4 py-3 text-sm text-black"> Button #2 </a>

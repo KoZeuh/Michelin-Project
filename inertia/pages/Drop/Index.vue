@@ -3,7 +3,9 @@
     <!-- Éléments de fond natifs du prototype -->
     <div id="bg"></div>
     <canvas ref="glCanvas" id="gl"></canvas>
-    <div id="gl-fallback" v-if="hasGlError"><div class="fallback-tire"></div></div>
+    <div id="gl-fallback" v-if="hasGlError">
+      <div class="fallback-tire"></div>
+    </div>
 
     <!-- Loader Écran -->
     <div class="loader" :class="{ done: !isLoading }">
@@ -21,13 +23,7 @@
       <section class="hero" id="hero" data-reveal>
         <div class="wrap">
           <span class="badge reveal">
-            <svg
-              class="lk"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.4"
-            >
+            <svg class="lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
               <path d="M7 11V7a5 5 0 0 1 9.9-1" />
               <rect x="4" y="11" width="16" height="10" rx="2" />
             </svg>
@@ -35,9 +31,7 @@
           </span>
           <h1 class="titling">
             <span class="kin"><span>Tu as roulé.</span></span>
-            <span class="kin"
-              ><span>Le <span class="y">Drop</span> s'ouvre.</span></span
-            >
+            <span class="kin"><span>Le <span class="y">Drop</span> s'ouvre.</span></span>
           </h1>
           <div class="hero-foot">
             <p class="hero-lede reveal d2">
@@ -66,14 +60,10 @@
       <!-- MARQUEE BANNER -->
       <div class="marquee">
         <div class="mq-track">
-          <span
-            >Drop #2 Gravel<i></i>Édition Finisher<i></i>Accès 48h<i></i>Power Gravel<i></i>Stock
-            limité<i></i>Unlock &amp; Ride<i></i
-          ></span>
-          <span
-            >Drop #2 Gravel<i></i>Édition Finisher<i></i>Accès 48h<i></i>Power Gravel<i></i>Stock
-            limité<i></i>Unlock &amp; Ride<i></i
-          ></span>
+          <span>Drop #2 Gravel<i></i>Édition Finisher<i></i>Accès 48h<i></i>Power Gravel<i></i>Stock
+            limité<i></i>Unlock &amp; Ride<i></i></span>
+          <span>Drop #2 Gravel<i></i>Édition Finisher<i></i>Accès 48h<i></i>Power Gravel<i></i>Stock
+            limité<i></i>Unlock &amp; Ride<i></i></span>
         </div>
       </div>
 
@@ -94,10 +84,8 @@
               <div class="trace">
                 <span class="lbl">Trace GPS validée</span>
                 <svg viewBox="0 0 400 400" class="w-full h-full">
-                  <path
-                    class="route"
-                    d="M 50,200 C 80,100 150,50 200,150 C 250,250 320,100 350,200 C 320,300 250,350 200,250 C 150,150 80,300 50,200 Z"
-                  />
+                  <path class="route"
+                    d="M 50,200 C 80,100 150,50 200,150 C 250,250 320,100 350,200 C 320,300 250,350 200,250 C 150,150 80,300 50,200 Z" />
                   <circle cx="50" cy="200" r="6" class="pin" />
                   <circle cx="350" cy="200" r="6" class="pin" />
                 </svg>
@@ -114,12 +102,7 @@
             <span class="eyebrow">Michelin · Gamme Performance</span>
             <h2 class="titling">Choisis ton terrain.</h2>
             <div class="tire-switch">
-              <button
-                v-for="(t, i) in tires"
-                :key="t.id"
-                :class="{ on: tireIdx === i }"
-                @click="selectTire(i)"
-              >
+              <button v-for="(t, i) in tires" :key="t.id" :class="{ on: tireIdx === i }" @click="selectTire(i)">
                 <span class="tn">{{ t.name }}</span>
                 <span class="tc">{{ t.cat }}</span>
               </button>
@@ -146,9 +129,7 @@
 
           <!-- Le prix au pied de la roue -->
           <div class="stage-foot">
-            <span class="sf-price"
-              >{{ tire.name }} · dès <b>{{ fmt(tire.price) }}</b></span
-            >
+            <span class="sf-price">{{ tire.name }} · dès <b>{{ fmt(tire.price) }}</b></span>
             <button class="sf-btn" @click="go('#pack')">Voir le pack</button>
           </div>
 
@@ -216,11 +197,9 @@
                 <span class="stub-ed">Édition Finisher · Gravel</span>
               </div>
               <div class="stub-photo">
-                <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span
-                ><span class="cm br"></span>
-                <span class="stub-lbl"
-                  >PACKSHOT<br />2 pneus + 2 chambres<br />+ casquette Finisher</span
-                >
+                <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span><span
+                  class="cm br"></span>
+                <span class="stub-lbl">PACKSHOT<br />2 pneus + 2 chambres<br />+ casquette Finisher</span>
               </div>
               <div class="stub-foot mono">RÉF · MUR-DROP02-{{ tire.id.toUpperCase() }}</div>
             </aside>
@@ -230,9 +209,7 @@
             <div class="ticket-body">
               <header class="tk-head">
                 <div>
-                  <span class="eyebrow" style="color: var(--blue)"
-                    >Pack Finisher · accès réservé</span
-                  >
+                  <span class="eyebrow" style="color: var(--blue)">Pack Finisher · accès réservé</span>
                   <h3>Pack {{ tire.name }}</h3>
                 </div>
                 <span class="tk-no mono">48 H</span>
@@ -242,26 +219,24 @@
                 <li class="in">
                   <span class="li-no">01</span>
                   <div class="li-main">
-                    <span class="li-nm">MICHELIN {{ tire.name }}</span
-                    ><span class="li-sub"
-                      >{{ tire.section }} · Tubeless Ready · {{ tire.cat }}</span
-                    >
+                    <span class="li-nm">MICHELIN {{ tire.name }}</span><span class="li-sub">{{ tire.section }} ·
+                      Tubeless Ready · {{ tire.cat }}</span>
                   </div>
                   <span class="li-q">×2</span>
                 </li>
                 <li class="in">
                   <span class="li-no">02</span>
                   <div class="li-main">
-                    <span class="li-nm">MICHELIN Air Stop</span
-                    ><span class="li-sub">Chambre à air renforcée · valve Presta 40 mm</span>
+                    <span class="li-nm">MICHELIN Air Stop</span><span class="li-sub">Chambre à air renforcée · valve
+                      Presta 40 mm</span>
                   </div>
                   <span class="li-q">×2</span>
                 </li>
                 <li class="in">
                   <span class="li-no">03</span>
                   <div class="li-main">
-                    <span class="li-nm">Casquette Michelin Finisher</span
-                    ><span class="li-sub">Édition limitée — non vendue en magasin</span>
+                    <span class="li-nm">Casquette Michelin Finisher</span><span class="li-sub">Édition limitée — non
+                      vendue en magasin</span>
                   </div>
                   <span class="li-q">×1</span>
                 </li>
@@ -270,13 +245,7 @@
               <div class="tk-opt">
                 <span class="ol">Couleur de la casquette</span>
                 <div class="sws">
-                  <button
-                    v-for="c in caps"
-                    :key="c.id"
-                    class="sw"
-                    :class="{ on: cap === c.id }"
-                    @click="cap = c.id"
-                  >
+                  <button v-for="c in caps" :key="c.id" class="sw" :class="{ on: cap === c.id }" @click="cap = c.id">
                     <span class="chip" :style="{ background: c.hex }"></span>{{ c.name }}
                   </button>
                 </div>
@@ -328,14 +297,7 @@
           <div class="trust-grid">
             <div class="tcard">
               <div class="ic">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
@@ -344,14 +306,7 @@
             </div>
             <div class="tcard">
               <div class="ic">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <circle cx="12" cy="12" r="10" />
                   <path d="m9 12 2 2 4-4" />
                 </svg>
@@ -361,14 +316,7 @@
             </div>
             <div class="tcard">
               <div class="ic">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="1" y="3" width="15" height="13" rx="2" ry="2" />
                   <path d="M16 8h4l3 3v5h-7V8z" />
                   <circle cx="5.5" cy="18.5" r="2.5" />
@@ -380,17 +328,9 @@
             </div>
             <div class="tcard">
               <div class="ic">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path
-                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.38 0 0 1 8 8v.5z"
-                  />
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.38 0 0 1 8 8v.5z" />
                 </svg>
               </div>
               <h5>Support Expert</h5>
@@ -415,9 +355,7 @@
       <div class="wrap bnb-in">
         <div class="pr">
           <span class="pn">{{ tire.name }}</span>
-          <span class="pl"
-            >Pack Finisher réservé · <b>{{ fmt(unitPrice * qty) }}</b></span
-          >
+          <span class="pl">Pack Finisher réservé · <b>{{ fmt(unitPrice * qty) }}</b></span>
         </div>
         <button class="bbtn" @click="addToCart">
           Profiter de mon offre <span class="dot">{{ qty }}</span>
@@ -680,7 +618,7 @@ onMounted(async () => {
 onUnmounted(() => {
   if (lenis) lenis.destroy()
   if (threeScene) threeScene.dispose()
-  window.removeEventListener('resize', () => {})
-  window.removeEventListener('pointermove', () => {})
+  window.removeEventListener('resize', () => { })
+  window.removeEventListener('pointermove', () => { })
 })
 </script>

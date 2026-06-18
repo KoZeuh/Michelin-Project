@@ -30,16 +30,8 @@ const markStyle = computed(() => ({ background: brandGradient(brand.value.colors
   <div class="inline-flex items-center gap-3 min-w-0">
     <div
       class="grid shrink-0 place-items-center overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.2)]"
-      :class="sizeClasses[props.size]"
-      :style="markStyle"
-      aria-hidden="true"
-    >
-      <img
-        v-if="brand.logoUrl"
-        :src="brand.logoUrl"
-        :alt="brand.name"
-        class="h-full w-full object-cover"
-      />
+      :class="sizeClasses[props.size]" :style="markStyle" aria-hidden="true">
+      <img v-if="brand.logoUrl" :src="brand.logoUrl" :alt="brand.name" class="h-full w-full object-cover" />
       <span v-else class="brand-mark-initials font-semibold tracking-tight text-white">
         {{ initials }}
       </span>

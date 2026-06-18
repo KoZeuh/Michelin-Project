@@ -15,10 +15,7 @@ const shellStyle = computed(() => ({
 </script>
 
 <template>
-  <div
-    class="min-h-screen bg-[#0a0a0f] text-white selection:bg-blue-500/30 overflow-x-hidden"
-    :style="shellStyle"
-  >
+  <div class="min-h-screen bg-[#0a0a0f] text-white selection:bg-blue-500/30 overflow-x-hidden" :style="shellStyle">
     <slot />
     <PendingRequestIndicator />
     <FlashToasts />
