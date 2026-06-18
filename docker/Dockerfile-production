@@ -16,10 +16,7 @@ RUN bun install --frozen-lockfile
 COPY . .
 
 # Build the AdonisJS application.
-# .env.build provides placeholder values so AdonisJS can bootstrap during codegen
-# (generates .adonisjs/client/registry.ts via Tuyau). Removed after build.
-COPY .env.build .env
-RUN bun run build -- --ignore-ts-errors && rm .env
+RUN bun run build -- --ignore-ts-errors
 
 # Production stage
 FROM node:24-alpine AS runner
