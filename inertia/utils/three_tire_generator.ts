@@ -76,23 +76,26 @@ export class MichelinThreeScene {
   }
 
   private buildWheel() {
-  private buildWheel() {
     const g = new THREE.Group()
 
     // 1. Jante (Rim)
-    const rimMat = new THREE.MeshStandardMaterial({ 
-      color: 0x222222, 
-      roughness: 0.4, 
-      metalness: 0.5 
+    const rimMat = new THREE.MeshStandardMaterial({
+      color: 0x222222,
+      roughness: 0.4,
+      metalness: 0.5,
     })
-    
+
     const rim = new THREE.Mesh(new THREE.TorusGeometry(1.54, 0.06, 32, 200), rimMat)
-    rim.scale.set(1, 1, 0.8) 
+    rim.scale.set(1, 1, 0.8)
     g.add(rim)
 
     // 2. Moyeu (Hub)
-    const hubMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.5, metalness: 0.8 })
-    
+    const hubMat = new THREE.MeshStandardMaterial({
+      color: 0x333333,
+      roughness: 0.5,
+      metalness: 0.8,
+    })
+
     const hubCore = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.4, 32), hubMat)
     hubCore.rotation.x = Math.PI / 2
     g.add(hubCore)
@@ -112,9 +115,13 @@ export class MichelinThreeScene {
     g.add(rightFlange)
 
     // Disque de frein
-    const discMat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, metalness: 0.9, roughness: 0.4 })
+    const discMat = new THREE.MeshStandardMaterial({
+      color: 0xaaaaaa,
+      metalness: 0.9,
+      roughness: 0.4,
+    })
     const disc = new THREE.Mesh(new THREE.TorusGeometry(0.25, 0.04, 8, 64), discMat)
-    disc.scale.set(1, 1, 0.1) 
+    disc.scale.set(1, 1, 0.1)
     disc.position.z = 0.18
     g.add(disc)
 
@@ -130,9 +137,13 @@ export class MichelinThreeScene {
       const hubOffset = isLeft ? 0.4 : -0.4
       const hubAngle = rimAngle + hubOffset
 
-      const p1 = new THREE.Vector3(Math.cos(hubAngle) * flangeRadius, Math.sin(hubAngle) * flangeRadius, z)
-      const p2 = new THREE.Vector3(Math.cos(rimAngle) * 1.50, Math.sin(rimAngle) * 1.50, 0)
-      
+      const p1 = new THREE.Vector3(
+        Math.cos(hubAngle) * flangeRadius,
+        Math.sin(hubAngle) * flangeRadius,
+        z
+      )
+      const p2 = new THREE.Vector3(Math.cos(rimAngle) * 1.5, Math.sin(rimAngle) * 1.5, 0)
+
       const dir = new THREE.Vector3().subVectors(p2, p1)
       const len = dir.length()
 
@@ -145,43 +156,43 @@ export class MichelinThreeScene {
     return g
   }
 
- private createSidewallTexture(tireName: string) {
+  private createSidewallTexture(tireName: string) {
     const canvas = document.createElement('canvas')
     canvas.width = 4096 // Texture très large pour enrouler tout le pneu
     canvas.height = 512
     const ctx = canvas.getContext('2d')!
-    
+
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.textBaseline = 'middle'
-    
+
     // En 3D (Three.js), l'axe Y est lu de bas en haut (flipY = true par défaut).
     // Le flanc Face est donc en bas du canvas, et l'Arrière en haut.
-    const yBack = 512 * 0.22 
-    const yFront = 512 * 0.78 
-    
+    const yBack = 512 * 0.22
+    const yFront = 512 * 0.78
+
     // On répète le logo 3 fois autour du pneu
-    for(let i = 0; i < 3; i++) {
-      const x = (canvas.width / 3) * i + (canvas.width / 6)
-      
+    for (let i = 0; i < 3; i++) {
+      const x = (canvas.width / 3) * i + canvas.width / 6
+
       // -- FLANC FACE (Celui qu'on voit à l'écran) --
       ctx.save()
       ctx.translate(x, yFront)
-      // On remplace le miroir par une rotation à 180° : le texte s'enroule 
+      // On remplace le miroir par une rotation à 180° : le texte s'enroule
       // dans le bon sens sans retourner les lettres physiquement !
-      ctx.rotate(Math.PI) 
-      
+      ctx.rotate(Math.PI)
+
       ctx.textAlign = 'right'
       ctx.fillStyle = '#FFFFFF'
       ctx.font = 'italic 900 48px "Noto Sans", sans-serif'
-      ctx.fillText("MICHELIN", -15, 0)
-      
+      ctx.fillText('MICHELIN', -15, 0)
+
       ctx.textAlign = 'left'
       ctx.fillStyle = '#FCE500' // Jaune Michelin
       ctx.font = 'italic 800 26px "Noto Sans", sans-serif'
       ctx.fillText(tireName.toUpperCase(), 15, 0)
-      
+
       ctx.restore()
-      
+
       // -- FLANC ARRIÈRE --
       ctx.save()
       ctx.translate(x, yBack)
@@ -189,13 +200,13 @@ export class MichelinThreeScene {
       ctx.textAlign = 'right'
       ctx.fillStyle = '#FFFFFF'
       ctx.font = 'italic 900 48px "Noto Sans", sans-serif'
-      ctx.fillText("MICHELIN", -15, 0)
-      
+      ctx.fillText('MICHELIN', -15, 0)
+
       ctx.textAlign = 'left'
       ctx.fillStyle = '#FCE500'
       ctx.font = 'italic 800 26px "Noto Sans", sans-serif'
       ctx.fillText(tireName.toUpperCase(), 15, 0)
-      
+
       ctx.restore()
     }
 
@@ -203,8 +214,6 @@ export class MichelinThreeScene {
     texture.anisotropy = 16
     return texture
   }
-
-  
 
   private buildTread(spec: any) {
     const g = new THREE.Group()
@@ -231,7 +240,7 @@ export class MichelinThreeScene {
       roughness: 0.7,
       metalness: 0.1,
     })
-    
+
     // On crée un "fantôme" très légèrement plus grand pour afficher l'étiquette
     const decalTorus = new THREE.Mesh(new THREE.TorusGeometry(Rc, w + 0.0015, 48, 200), decalMat)
     decalTorus.scale.set(1, 1, 0.9)
@@ -274,7 +283,7 @@ export class MichelinThreeScene {
 
           const x = rr * Math.cos(th)
           const y = rr * Math.sin(th)
-          const zz = w * Math.sin(phi) * 0.9 
+          const zz = w * Math.sin(phi) * 0.9
 
           o.position.set(x, y, zz)
 
