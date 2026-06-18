@@ -4,18 +4,6 @@
       <div
         class="flex flex-col md:flex-row items-start md:items-center gap-9 pb-8 border-b border-white/10"
       >
-        <div
-          class="w-[84px] h-[108px] shrink-0 rounded-xl flex items-center justify-center text-center text-[0.58rem] text-[#7e8eb4] font-mono leading-relaxed"
-          style="
-            background: repeating-linear-gradient(
-              135deg,
-              rgba(255, 255, 255, 0.06) 0 14px,
-              rgba(255, 255, 255, 0.02) 14px 28px
-            );
-          "
-        >
-          BIBENDUM<br />pose<br />« Hello »
-        </div>
         <div class="flex-1">
           <div class="text-[1.35rem] font-black tracking-tight mb-1 text-white">
             À bientôt sur les chemins.

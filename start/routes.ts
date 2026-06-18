@@ -9,6 +9,20 @@ router.group(() => {
 
 router
   .group(() => {
+    router.get('/login', [controllers.Session, 'create']).as('session.create')
+    router.post('/login', [controllers.Session, 'store']).as('session.store')
+    router.get('/register', [controllers.Session, 'registerCreate']).as('session.register')
+    router.post('/register', [controllers.Session, 'registerStore']).as('session.registerStore')
+  })
+  .use(middleware.guest())
+
+router
+  .delete('/logout', [controllers.Session, 'destroy'])
+  .as('session.destroy')
+  .use(middleware.auth())
+
+router
+  .group(() => {
     router.post('auth/login', [controllers.api.Auth, 'store']).as('api.auth.login')
 
     router
@@ -21,6 +35,9 @@ router
         router
           .get('products/:productId/reviews', [controllers.api.Products, 'reviews'])
           .as('api.products.reviews')
+        router
+          .post('packs/generate-code', [controllers.api.Packs, 'generateCode'])
+          .as('api.packs.generateCode')
       })
       .use(middleware.apiAuth())
   })

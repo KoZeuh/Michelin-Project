@@ -265,6 +265,55 @@ GET /api/products/pack-gravel-premium/reviews
 
 ---
 
+## Packs
+
+### POST `/api/packs/generate-code` 🔒
+
+Génère un code unique lié à un pack pour l'utilisateur connecté. Le code expire après 2 jours.
+
+**Headers**
+```
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Body**
+```json
+{
+  "packId": "pack-gravel-premium"
+}
+```
+
+| Champ    | Type   | Description                                        |
+|----------|--------|----------------------------------------------------|
+| `packId` | string | Identifiant du pack (champ `id` retourné par `/packs`) |
+
+**Réponse 201**
+```json
+{
+  "id": 1,
+  "code": "c60f2e43-f1e9-4d7d-8745-c6dbfda85cd3",
+  "packId": "pack-gravel-premium",
+  "userId": 2,
+  "expiresAt": "2026-06-20T11:43:56.559+00:00"
+}
+```
+
+| Champ       | Type   | Description                                         |
+|-------------|--------|-----------------------------------------------------|
+| `id`        | number | Identifiant en base                                 |
+| `code`      | string | UUID généré — à afficher / scanner côté Flutter     |
+| `packId`    | string | Slug du pack                                        |
+| `userId`    | number | ID de l'utilisateur connecté                        |
+| `expiresAt` | string | Date d'expiration (maintenant + 2 jours) en ISO 8601|
+
+**Réponse 404**
+```json
+{ "message": "Pack not found" }
+```
+
+---
+
 ## Gestion des erreurs
 
 | Code HTTP | Signification                                                      |
