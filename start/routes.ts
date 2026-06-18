@@ -17,8 +17,10 @@ router
   .use(middleware.guest())
 
 router
-  .delete('/logout', [controllers.Session, 'destroy'])
-  .as('session.destroy')
+  .group(() => {
+    router.get('/profil', [controllers.Profile, 'index']).as('profile.index')
+    router.delete('/logout', [controllers.Session, 'destroy']).as('session.destroy')
+  })
   .use(middleware.auth())
 
 router

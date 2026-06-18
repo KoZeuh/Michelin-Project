@@ -19,10 +19,10 @@
         </template>
 
         <template v-else>
-          <div class="user-chip">
+          <Link href="/profil" class="user-chip">
             <span class="user-avatar">{{ user.initials }}</span>
             <span class="user-name">{{ user.firstName ?? user.email }}</span>
-          </div>
+          </Link>
           <Link href="/logout" method="delete" as="button" class="nav-auth-link">Déconnexion</Link>
         </template>
 
@@ -118,6 +118,11 @@ header.site.solid .nav-auth-link:hover {
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.user-chip:hover {
+  opacity: 0.8;
 }
 
 .user-avatar {

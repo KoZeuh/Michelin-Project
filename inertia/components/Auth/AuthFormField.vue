@@ -1,12 +1,12 @@
 <script setup lang="ts">
-defineProps<{
-  label: string
-  name: string
-  type?: string
-  placeholder?: string
-  autocomplete?: string
-  error?: string
-}>()
+  defineProps<{
+    label: string
+    name: string
+    type?: string
+    placeholder?: string
+    autocomplete?: string
+    error?: string
+  }>()
 </script>
 
 <template>
@@ -69,7 +69,7 @@ defineProps<{
 }
 
 .auth-field-input::placeholder {
-  color: rgba(160, 180, 220, 0.45);
+  color: #ffffff;
 }
 
 .auth-field-error {
