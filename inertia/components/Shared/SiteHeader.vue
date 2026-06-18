@@ -23,7 +23,7 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3'
-import { useBrand } from '~/composables/useBrand'
+import { useBrand } from '~/composables/use_brand'
 
 const brand = useBrand()
 
