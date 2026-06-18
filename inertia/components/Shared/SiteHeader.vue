@@ -1,13 +1,9 @@
 <template>
-  <header class="site" :class="{ solid: scrolled }">
+  <header class="site solid">
     <div class="wrap site-in">
       <Link href="/" class="logo">
-        <div class="bib">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff">
-            <circle cx="12" cy="12" r="10" />
-          </svg>
-        </div>
-        <div class="wd">MICHELIN</div>
+        <img v-if="brand.logoUrl" :src="brand.logoUrl" :alt="brand.name" class="logo-img" />
+        <div v-else class="bib"></div>
         <div class="ride-tag">UNLOCK &amp; RIDE</div>
       </Link>
 
@@ -27,6 +23,9 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3'
+import { useBrand } from '~/composables/useBrand'
+
+const brand = useBrand()
 
 defineProps({
   scrolled: {
@@ -41,3 +40,12 @@ defineProps({
 
 defineEmits(['cart-click', 'nav-stage'])
 </script>
+
+<style scoped>
+.logo-img {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+</style>

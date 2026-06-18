@@ -13,7 +13,7 @@ import { Env } from '@adonisjs/core/env'
 
 export default await Env.create(new URL('../', import.meta.url), {
   PUBLIC_APP_NAME: Env.schema.string(),
-  PUBLIC_APP_LOGO: Env.schema.string.optional({ format: 'url' }),
+  PUBLIC_APP_LOGO: Env.schema.string.optional(),
 
   NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
   PORT: Env.schema.number(),
