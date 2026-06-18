@@ -9,11 +9,8 @@ export class MichelinThreeScene {
   private pivot!: THREE.Group
   private wheelObj!: THREE.Group
   private treadGroup?: THREE.Group
-
   private animationFrameId: number = 0
   private glReady = false
-
-  // Variables d'animation
   private baseSpin = 0
   private scrollSpin = 0
   private switchOffset = 0
@@ -80,142 +77,148 @@ export class MichelinThreeScene {
     }
   }
 
-  // Construction de la roue
-  private strut(p1: THREE.Vector3, p2: THREE.Vector3, mat: THREE.Material, w: number, d?: number) {
-    const dir = new THREE.Vector3().subVectors(p2, p1)
-    const len = dir.length()
-    const m = new THREE.Mesh(new THREE.BoxGeometry(w, len, d || w), mat)
-    m.position.copy(p1).add(p2).multiplyScalar(0.5)
-    m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize())
-    return m
-  }
-
-  private buildWheel() {
+private buildWheel() {
     const g = new THREE.Group()
-    const rimMat = new THREE.MeshStandardMaterial({
-      color: 0x0e1119,
-      roughness: 0.34,
-      metalness: 0.55,
-    })
-    const aero = new THREE.Mesh(new THREE.TorusGeometry(1.3, 0.3, 12, 200), rimMat)
-    aero.scale.set(1, 1, 0.28)
-    g.add(aero)
-    const hook = new THREE.Mesh(
-      new THREE.TorusGeometry(BEAD, 0.05, 16, 200),
-      new THREE.MeshStandardMaterial({ color: 0x3a4254, roughness: 0.3, metalness: 0.8 })
-    )
-    hook.scale.set(1, 1, 0.6)
-    g.add(hook)
-    const hub = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.17, 0.17, 0.6, 30),
-      new THREE.MeshStandardMaterial({ color: 0x14181f, roughness: 0.34, metalness: 0.9 })
-    )
-    hub.rotation.x = Math.PI / 2
-    g.add(hub)
 
-    const flMat = new THREE.MeshStandardMaterial({
-      color: 0x232a36,
-      roughness: 0.4,
-      metalness: 0.85,
+    // 1. Jante (Rim) classique et fine (remplace l'énorme bloc noir Aero)
+    const rimMat = new THREE.MeshStandardMaterial({ 
+      color: 0x222222, 
+      roughness: 0.4, 
+      metalness: 0.5 
     })
-    ;[-0.27, 0.27].forEach((z) => {
-      const fl = new THREE.Mesh(new THREE.CylinderGeometry(0.27, 0.27, 0.045, 30), flMat)
-      fl.rotation.x = Math.PI / 2
-      fl.position.z = z
-      g.add(fl)
-    })
+    
+    // Un simple anneau fin, collé au pneu (le pneu commence à 1.60)
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(1.54, 0.06, 32, 200), rimMat)
+    rim.scale.set(1, 1, 0.8) // Légèrement aplatie sur les côtés
+    g.add(rim)
 
-    const casMat = new THREE.MeshStandardMaterial({
-      color: 0x9aa3b2,
-      roughness: 0.3,
-      metalness: 0.92,
-    })
-    for (let k = 0; k < 5; k++) {
-      const c = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.36 - k * 0.035, 0.36 - k * 0.035, 0.028, 28),
-        casMat
-      )
-      c.rotation.x = Math.PI / 2
-      c.position.z = 0.31 + k * 0.05
-      g.add(c)
-    }
+    // 2. Moyeu (Hub) central affiné
+    const hubMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.5, metalness: 0.8 })
+    
+    const hubCore = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.4, 32), hubMat)
+    hubCore.rotation.x = Math.PI / 2
+    g.add(hubCore)
+    
+    const flangeZ = 0.14
+    const flangeRadius = 0.08
+    const flangeGeo = new THREE.CylinderGeometry(flangeRadius, flangeRadius, 0.03, 32)
+    
+    const leftFlange = new THREE.Mesh(flangeGeo, hubMat)
+    leftFlange.rotation.x = Math.PI / 2
+    leftFlange.position.z = flangeZ
+    g.add(leftFlange)
+    
+    const rightFlange = new THREE.Mesh(flangeGeo, hubMat)
+    rightFlange.rotation.x = Math.PI / 2
+    rightFlange.position.z = -flangeZ
+    g.add(rightFlange)
 
-    const spMat = new THREE.MeshStandardMaterial({
-      color: 0xc2cad6,
-      roughness: 0.3,
-      metalness: 0.85,
-    })
-    const NS = 24
+    // Disque de frein (anneau creux plutôt qu'un cylindre plein)
+    const discMat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, metalness: 0.9, roughness: 0.4 })
+    const disc = new THREE.Mesh(new THREE.TorusGeometry(0.25, 0.04, 8, 64), discMat)
+    disc.scale.set(1, 1, 0.1) // Aplati pour faire une piste de freinage
+    disc.position.z = 0.18
+    g.add(disc)
+
+    // 3. Rayons (Spokes) longs et fins
+    const spMat = new THREE.MeshStandardMaterial({ color: 0xdddddd, roughness: 0.2, metalness: 1 })
+    const NS = 24 
+    
     for (let s = 0; s < NS; s++) {
-      const a = (s / NS) * Math.PI * 2
-      const z = s % 2 ? 0.27 : -0.27
-      const p1 = new THREE.Vector3(Math.cos(a) * 0.27, Math.sin(a) * 0.27, z)
-      const p2 = new THREE.Vector3(Math.cos(a) * 1.3, Math.sin(a) * 1.3, 0)
-      g.add(this.strut(p1, p2, spMat, 0.017, 0.05))
+      const isLeft = s % 2 === 0
+      const z = isLeft ? flangeZ : -flangeZ
+      
+      const rimAngle = (s / NS) * Math.PI * 2
+      const hubOffset = isLeft ? 0.4 : -0.4 
+      const hubAngle = rimAngle + hubOffset
+
+      const p1 = new THREE.Vector3(Math.cos(hubAngle) * flangeRadius, Math.sin(hubAngle) * flangeRadius, z)
+      // On étire les rayons tout du long, jusqu'à la nouvelle jante
+      const p2 = new THREE.Vector3(Math.cos(rimAngle) * 1.50, Math.sin(rimAngle) * 1.50, 0)
+      
+      const dir = new THREE.Vector3().subVectors(p2, p1)
+      const len = dir.length()
+      
+      const spoke = new THREE.Mesh(new THREE.CylinderGeometry(0.005, 0.005, len, 8), spMat)
+      spoke.position.copy(p1).add(p2).multiplyScalar(0.5)
+      spoke.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize())
+      g.add(spoke)
     }
+
     return g
   }
-
+  
   private buildTread(spec: any) {
     const g = new THREE.Group()
     const w = spec.width
     const Rc = BEAD + w
+
     const rubber = new THREE.MeshStandardMaterial({
-      color: 0x0c0f15,
-      roughness: spec.tread === 'slick' ? 0.32 : 0.72,
-      metalness: 0.18,
+      color: 0x111317,
+      roughness: spec.tread === 'slick' ? 0.6 : 0.9,
+      metalness: 0.05,
     })
-    g.add(new THREE.Mesh(new THREE.TorusGeometry(Rc, w, 40, 220), rubber))
+
+    const tireCarcass = new THREE.Mesh(new THREE.TorusGeometry(Rc, w, 48, 200), rubber)
+    tireCarcass.scale.set(1, 1, 0.9)
+    g.add(tireCarcass)
 
     if (spec.tread !== 'slick') {
-      const cfg =
-        spec.tread === 'cx'
-          ? { size: [0.085, 0.075, 0.13], around: 40, phis: [-0.66, -0.34, 0, 0.34, 0.66] }
-          : { size: [0.055, 0.05, 0.09], around: 62, phis: [-0.62, -0.4, -0.14, 0.14, 0.4, 0.62] }
+      const isGravel = spec.tread === 'gravel'
+      const cfg = isGravel
+        ? {
+            radiusTop: 0.012,
+            radiusBottom: 0.025,
+            height: 0.06,
+            around: 70,
+            phis: [-0.6, -0.3, 0, 0.3, 0.6],
+          }
+        : {
+            radiusTop: 0.015,
+            radiusBottom: 0.035,
+            height: 0.1,
+            around: 50,
+            phis: [-0.6, -0.35, 0, 0.35, 0.6],
+          }
 
-      const km = new THREE.MeshStandardMaterial({
-        color: 0x05060a,
-        roughness: 0.86,
-        metalness: 0.1,
-      })
-      const im = new THREE.InstancedMesh(
-        new THREE.BoxGeometry(cfg.size[0], cfg.size[1], cfg.size[2]),
-        km,
-        cfg.phis.length * cfg.around
-      )
+      const km = new THREE.MeshStandardMaterial({ color: 0x111317, roughness: 0.9, metalness: 0.0 })
+
+      const knobGeo = new THREE.CylinderGeometry(cfg.radiusTop, cfg.radiusBottom, cfg.height, 6)
+      knobGeo.rotateX(Math.PI / 2)
+
+      const im = new THREE.InstancedMesh(knobGeo, km, cfg.phis.length * cfg.around)
       const o = new THREE.Object3D()
       let i = 0
 
       for (let t = 0; t < cfg.around; t++) {
         const theta = (t / cfg.around) * Math.PI * 2
+
         cfg.phis.forEach((phi, pi) => {
           const th = theta + (pi % 2 ? Math.PI / cfg.around : 0)
           const rr = Rc + w * Math.cos(phi)
-          const x = rr * Math.cos(th),
-            y = rr * Math.sin(th),
-            zz = w * Math.sin(phi)
+
+          const x = rr * Math.cos(th)
+          const y = rr * Math.sin(th)
+          const zz = w * Math.sin(phi) * 0.9 // * 0.9 à cause du scale de la carcasse
+
           o.position.set(x, y, zz)
-          o.lookAt(
-            x + Math.cos(phi) * Math.cos(th),
-            y + Math.cos(phi) * Math.sin(th),
-            zz + Math.sin(phi)
-          )
+
+          const nx = Math.cos(phi) * Math.cos(th)
+          const ny = Math.cos(phi) * Math.sin(th)
+          const nz = Math.sin(phi)
+          o.lookAt(x + nx, y + ny, zz + nz)
+
           const center = Math.abs(phi) < 0.18
-          const sc = center ? 1.1 : Math.abs(phi) > 0.55 ? 0.8 : 0.95
-          o.scale.set(sc, sc, center ? 1.2 : 1)
+          const sc = center ? 1 : 0.85
+          o.scale.set(sc, sc, center ? 1.2 : 0.9)
+
           o.updateMatrix()
           im.setMatrixAt(i++, o.matrix)
         })
       }
       g.add(im)
-    } else {
-      g.add(
-        new THREE.Mesh(
-          new THREE.TorusGeometry(Rc + w * 0.985, 0.01, 8, 200),
-          new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 0.5 })
-        )
-      )
     }
+
     return g
   }
 
