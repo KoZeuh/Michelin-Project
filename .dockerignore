@@ -4,4 +4,5 @@ tmp
 .env
 .env.*
 .adonisjs
+!.env.build
 public/assets
