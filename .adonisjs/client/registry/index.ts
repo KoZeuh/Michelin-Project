@@ -48,6 +48,48 @@ const routes = {
     tokens: [{"old":"/api/products/:productId/reviews","type":0,"val":"api","end":""},{"old":"/api/products/:productId/reviews","type":0,"val":"products","end":""},{"old":"/api/products/:productId/reviews","type":1,"val":"productId","end":""},{"old":"/api/products/:productId/reviews","type":0,"val":"reviews","end":""}],
     types: placeholder as Registry['api.products.reviews']['types'],
   },
+  'api.packs.generateCode': {
+    methods: ["POST"],
+    pattern: '/api/packs/generate-code',
+    tokens: [{"old":"/api/packs/generate-code","type":0,"val":"api","end":""},{"old":"/api/packs/generate-code","type":0,"val":"packs","end":""},{"old":"/api/packs/generate-code","type":0,"val":"generate-code","end":""}],
+    types: placeholder as Registry['api.packs.generateCode']['types'],
+  },
+  'session.create': {
+    methods: ["GET","HEAD"],
+    pattern: '/login',
+    tokens: [{"old":"/login","type":0,"val":"login","end":""}],
+    types: placeholder as Registry['session.create']['types'],
+  },
+  'session.store': {
+    methods: ["POST"],
+    pattern: '/login',
+    tokens: [{"old":"/login","type":0,"val":"login","end":""}],
+    types: placeholder as Registry['session.store']['types'],
+  },
+  'session.register': {
+    methods: ["GET","HEAD"],
+    pattern: '/register',
+    tokens: [{"old":"/register","type":0,"val":"register","end":""}],
+    types: placeholder as Registry['session.register']['types'],
+  },
+  'session.registerStore': {
+    methods: ["POST"],
+    pattern: '/register',
+    tokens: [{"old":"/register","type":0,"val":"register","end":""}],
+    types: placeholder as Registry['session.registerStore']['types'],
+  },
+  'session.destroy': {
+    methods: ["DELETE"],
+    pattern: '/logout',
+    tokens: [{"old":"/logout","type":0,"val":"logout","end":""}],
+    types: placeholder as Registry['session.destroy']['types'],
+  },
+  'profile.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/profil',
+    tokens: [{"old":"/profil","type":0,"val":"profil","end":""}],
+    types: placeholder as Registry['profile.index']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }
