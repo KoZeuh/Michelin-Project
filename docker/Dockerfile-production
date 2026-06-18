@@ -47,5 +47,9 @@ USER adonis
 # Expose the application port.
 EXPOSE 3001
 
+RUN node ace migration:run
+
+RUN node ace db:seed
+
 # Start the production application.
 CMD ["bun", "run", "start"]
